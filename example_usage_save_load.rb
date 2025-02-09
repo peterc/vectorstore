@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require './vector_storage'
+require 'vector_store'
 
 # Create a vector store instance and add sample vectors.
 store = VectorStore.new

@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../vector_storage'
+require 'vector_store'
 require 'tempfile'
 
 class TestVectorStore < Minitest::Test
