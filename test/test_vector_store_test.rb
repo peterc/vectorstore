@@ -90,7 +90,7 @@ class TestVectorStore < Minitest::Test
     vector = [1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0]
     store.add("vectorQ", vector)
     stored = store.get("vectorQ")
-    # When quantization is enabled, we expect the stored vector to be a String (bitfield)
-    assert_instance_of String, stored
+    # When quantization is enabled, we expect the stored vector to be a String (bitfield) representing 1-bit quantization.
+    assert_equal "10101010", stored
   end
 end
