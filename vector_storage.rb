@@ -1,4 +1,5 @@
 require 'json'
+require 'base64'
 class VectorStore
   def initialize(quantized: false)
     # Internal store mapping primary key to vector (array of numbers)
@@ -27,6 +28,11 @@ class VectorStore
 
   # Compute the cosine similarity between two vectors.
   def cosine_similarity(vec1, vec2)
+    if @quantized
+      vec1 = vec1.is_a?(String) ? vec1 : quantize(vec1)
+      vec2 = vec2.is_a?(String) ? vec2 : quantize(vec2)
+      return cosine_similarity_quantized(vec1, vec2)
+    end
     if vec1.is_a?(String) && vec2.is_a?(String)
       return cosine_similarity_quantized(vec1, vec2)
     end
@@ -82,12 +88,29 @@ class VectorStore
 
   # Serialize the internal vector store to a JSON string.
   def serialize
-    JSON.dump(@vectors)
+    if @quantized
+      encoded = {}
+      @vectors.each do |k, v|
+        encoded[k] = Base64.strict_encode64(v)
+      end
+      JSON.dump(encoded)
+    else
+      JSON.dump(@vectors)
+    end
   end
 
   # Deserialize a JSON string and update the internal store.
   def deserialize(json_string)
-    @vectors = JSON.parse(json_string)
+    data = JSON.parse(json_string)
+    if @quantized
+      decoded = {}
+      data.each do |k, v|
+        decoded[k] = Base64.decode64(v)
+      end
+      @vectors = decoded
+    else
+      @vectors = data
+    end
   end
 
   # Save the internal vector store to a file.
