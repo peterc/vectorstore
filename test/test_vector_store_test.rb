@@ -83,6 +83,7 @@ class TestVectorStore < Minitest::Test
 
     file.close
     file.unlink if File.exist?(filename)
+  end
   
   def test_quantized_storage_format
     store = VectorStore.new(quantized: true)
