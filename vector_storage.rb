@@ -72,7 +72,9 @@ class VectorStore
       total_ones_str2 += byte2.to_s(2).count("1")
     end
     return 0.0 if total_ones_str1 == 0 || total_ones_str2 == 0
-    dot.to_f / (Math.sqrt(total_ones_str1) * Math.sqrt(total_ones_str2))
+    sim = dot.to_f / (Math.sqrt(total_ones_str1) * Math.sqrt(total_ones_str2))
+    sim = 1.0 if (1.0 - sim).abs < 1e-6
+    sim
   end
 
   # Convert an array of floats to a 1-bit quantized bit string.
