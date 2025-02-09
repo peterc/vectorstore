@@ -53,9 +53,29 @@ loaded_store = VectorStore.new
 loaded_store.load("vector_store.json")
 ```
 
+### Using OpenAI
+
+VectorStore can integrate with OpenAI's API to generate embeddings for text inputs and queries. To use this feature with quantization (STRONGLY RECOMMENDED), initialize the store with quantized mode.
+
+Example:
+
+```ruby
+store = VectorStore.new(quantized: true)
+
+store.add_with_openai("example", "Your sample text to embed")
+
+# You can query with text and have the text embedded automatically
+store.find_closest_with_openai("Your query text", 3)
+
+# You can also query by the key of the vector
+store.find_closest_with_key("example")
+```
+
+Supporting other embedding systems in a nice way would be good for the future, but I like OpenAI's embedding mechanism and it's cheap, so this is just step one. You can see example scripts in `examples/example_openai_*.rb` for a broader demo.
+
 ### Working with quantized vectors
 
-VectorStore supports 1 bit vector quantization so that vectors can be stored in a bitfield (using a ASCII-encoded string with 8 bits per character for portability) for a significant memory use reduction. The cost is accuracy, especially on low dimension vectors – high dimension vectors such as used for text embeddings will fare a LOT better. Initialize the store with the `quantized: true` option:
+VectorStore supports 1 bit vector quantization so that vectors can be stored in a bitfield (using a ASCII-encoded string with 8 bits per character for portability) for a significant memory use reduction. The cost is accuracy, especially on low dimension vectors – high dimension vectors such as used for text embeddings from OpenAI's API (see above) will fare a LOT better. Initialize the store with the `quantized: true` option:
 
 ```ruby
 store = VectorStore.new(quantized: true)
