@@ -57,6 +57,9 @@ loaded_store.load("vector_store.json")
 
 VectorStore can integrate with OpenAI's API to generate embeddings for text inputs and queries. To use this feature with quantization (STRONGLY RECOMMENDED), initialize the store with quantized mode.
 
+> [!TIP]
+> Let me iterate again, using quantization with OpenAI embeddings is strongly recommended with VectorStore as the normal way we currently store the vectors is very space inefficient, particularly when serializing to disk.
+
 Example:
 
 ```ruby
@@ -73,7 +76,8 @@ store.find_closest_with_key("example")
 
 Supporting other embedding systems in a nice way would be good for the future, but I like OpenAI's embedding mechanism and it's cheap, so this is just step one. You can see example scripts in `examples/example_openai_*.rb` for a broader demo.
 
-For now, your API key is assumed to be in the `OPENAI_API_KEY` environment variable.
+> [!NOTE]  
+> For now, your API key is assumed to be in the `OPENAI_API_KEY` environment variable. The `text-embedding-3-small` model is also used by default but this can be overridden in calls by using the `embedding_model` keyword argument on `find_closest_with_openai` and `add_with_openai` calls.
 
 ### Working with quantized vectors
 
