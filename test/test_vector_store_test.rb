@@ -20,7 +20,7 @@ class TestVectorStore < Minitest::Test
     query_vector = [2.0, 3.0, 4.0]
     closest = @store.find_closest(query_vector, 2)
     key1, sim1 = closest[0]
-    key2, sim2 = closest[1]
+    _key2, _sim2 = closest[1]
     # Expect vector2 to be the closest match (with similarity of 1.0)
     assert_equal "vector2", key1
     assert_in_delta 1.0, sim1, 1e-6
