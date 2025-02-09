@@ -91,6 +91,6 @@ class TestVectorStore < Minitest::Test
     store.add("vectorQ", vector)
     stored = store.get("vectorQ")
     # When quantization is enabled, we expect the stored vector to be a String (bitfield) with 8 bits per character.
-    assert_equal "\xaa", stored
+    assert_equal "# encoding: ASCII-8BIT\n#    valid: true\n\xAA", stored
   end
 end
