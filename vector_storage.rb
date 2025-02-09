@@ -1,3 +1,4 @@
+require 'json'
 class VectorStore
   def initialize
     # Internal store mapping primary key to vector (array of numbers)
@@ -40,5 +41,26 @@ class VectorStore
       [key, similarity]
     end
     similarities.sort_by { |_, sim| -sim }.first(k)
+  end
+
+  # Serialize the internal vector store to a JSON string.
+  def serialize
+    JSON.dump(@vectors)
+  end
+
+  # Deserialize a JSON string and update the internal store.
+  def deserialize(json_string)
+    @vectors = JSON.parse(json_string)
+  end
+
+  # Save the internal vector store to a file.
+  def save(filename)
+    File.write(filename, serialize)
+  end
+
+  # Load the internal vector store from a file.
+  def load(filename)
+    json_string = File.read(filename)
+    deserialize(json_string)
   end
 end
