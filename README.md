@@ -1,28 +1,29 @@
 # VectorStore
 
-VectorStore is a simple Ruby library for storing and querying vectors with optional quantization. It provides an easy-to-use interface for adding vectors, computing cosine similarity, finding the closest vectors, and serializing to JSON. It also features quantized storage for improved performance with large datasets.
+A pure Ruby library for storing and querying vectors with optional 1 bit quantization. It provides an easy-to-use interface for adding vectors, computing cosine similarity, finding the closest vectors, and serializing to JSON. It also features quantized storage for reduced memory requirements (roughly a 34x reduction!)
+
+## Features
+
+- **Vector Storage:** Easily add and retrieve vectors with unique keys.
+- **Closest Match:** Find the closest vectors to a given query vector using cosine similarity.
+- **Serialization:** Serialize the vector store to JSON for persistence.
+- **Quantization:** Optional 1-bit quantization to reduce memory footprint.
+- **Save/Load:** Persist vector store to disk and reload it.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+In a `Gemfile`:
 
 ```ruby
 gem 'vectorstore'
 ```
 
-Then execute:
-```bash
-bundle install
-```
-
-Or install it directly using RubyGems:
+Or directly:
 ```bash
 gem install vectorstore
 ```
 
 ## Basic Usage
-
-Here's a simple example to get you started:
 
 ```ruby
 require 'vectorstore'
@@ -54,25 +55,16 @@ loaded_store.load("vector_store.json")
 
 ### Working with Quantized Vectors
 
-VectorStore also supports quantized mode for memory efficient storage. Simply initialise the store with the `quantized: true` option:
+VectorStore also supports 1 bit vector quantization so that vectors can be stored in a bitfield (using a string) for a significant memory use reduction at the cost of accuracy, particularly on low dimension vectors (high dimension vectors such as used for text embeddings will do a LOT better). Initialize the store with the `quantized: true` option:
 
 ```ruby
 store = VectorStore.new(quantized: true)
 store.add("vectorQ", [1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0])
 ```
 
-## Features
-
-- **Vector Storage:** Easily add and retrieve vectors with unique keys.
-- **Cosine Similarity:** Compute similarities between vectors.
-- **Closest Match:** Find the closest vectors to a given query vector.
-- **Serialization:** Serialize the vector store to JSON for persistence.
-- **Quantization:** Optional 1-bit quantization to reduce memory footprint.
-- **Save/Load:** Persist vector store to disk and reload it.
-
 ## Running the Tests
 
-This project uses Minitest. To run the tests, simply execute:
+This project uses Minitest. To run the tests:
 
 ```bash
 rake test

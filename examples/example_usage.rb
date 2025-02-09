@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'vector_storage'
+require 'vectorstore'
 
 # Create an instance of VectorStore
 store = VectorStore.new

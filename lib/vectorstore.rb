@@ -88,7 +88,7 @@ class VectorStore
     end
     result = bytes.join
     result.force_encoding("ASCII-8BIT")
-    "# encoding: ASCII-8BIT\n#    valid: true\n" + result
+    result
   end
 
   # Serialize the internal vector store to a JSON string.

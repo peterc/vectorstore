@@ -1,11 +1,11 @@
 Gem::Specification.new do |spec|
   spec.name          = "vectorstore"
-  spec.version       = "0.1.0"
-  spec.authors       = ["Your Name"]
-  spec.email         = ["you@example.com"]
-  spec.summary       = "A simple vector storage library"
+  spec.version       = "0.0.1"
+  spec.authors       = ["Peter Cooper"]
+  spec.email         = ["git@peterc.org"]
+  spec.summary       = "A simple vector storage and querying library"
   spec.description   = "A library for storing and handling vectors with optional quantization."
-  spec.homepage      = "http://example.com/vectorstore"
+  spec.homepage      = "http://github.com/peterc/vectorstore"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*", "README.md"]
