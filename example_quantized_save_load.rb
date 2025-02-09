@@ -12,7 +12,7 @@ vector = [1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0]
 store.add("vectorQ", vector)
 
 # Save the vector store to a temporary file
-file = Tempfile.new('vector_store_quantized')
+file = File.new('vector_store_quantized', 'w')
 filename = file.path
 store.save(filename)
 
@@ -26,4 +26,4 @@ encoded_vector = Base64.strict_encode64(stored_vector)
 puts "Encoded vector from loaded store: #{encoded_vector}"
 
 file.close
-file.unlink if File.exist?(filename)
+#file.unlink if File.exist?(filename)

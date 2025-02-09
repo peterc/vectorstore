@@ -53,6 +53,15 @@ class TestVectorStore < Minitest::Test
     # Thus, their cosine similarity should be 0.0.
     similarity = store.cosine_similarity(vector_a, vector_b)
     assert_equal 0.0, similarity
+
+    vector_c = [1.0, 0.0, 1.0, -1.0]
+    vector_d = [0.0, 1.0, 0.0, -2.0]
+    store.add("c", vector_c)
+    store.add("d", vector_d)
+    # With 1-bit quantization: vector_c becomes [1,1,1,0] and vector_d becomes [1,1,1,0]
+    # Thus, their cosine similarity should be 1.0.
+    similarity = store.cosine_similarity(vector_c, vector_d)
+    assert_equal 1.0, similarity
   end
 
   def test_quantized_save_and_load
