@@ -1,4 +1,4 @@
-require 'vector_store'
+require 'vector_storage'
 require 'tempfile'
 require 'base64'
 

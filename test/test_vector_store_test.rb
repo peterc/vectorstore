@@ -1,5 +1,6 @@
 require 'minitest/autorun'
-require 'vector_store'
+$LOAD_PATH.unshift(File.expand_path("../../lib", __FILE__))
+require 'vector_storage'
 require 'tempfile'
 
 class TestVectorStore < Minitest::Test
