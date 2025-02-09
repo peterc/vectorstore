@@ -84,9 +84,11 @@ class VectorStore
     bytes = []
     bits.each_slice(8) do |slice|
       byte = slice.join.to_i(2)
-      bytes << byte.chr
+      bytes << byte.chr("ASCII-8BIT")
     end
-    bytes.join
+    result = bytes.join
+    result.force_encoding("ASCII-8BIT")
+    "# encoding: ASCII-8BIT\n#    valid: true\n" + result
   end
 
   # Serialize the internal vector store to a JSON string.
