@@ -2,6 +2,9 @@
 
 A pure Ruby library for storing and querying vectors with optional 1 bit quantization. It provides an easy-to-use interface for adding vectors, computing cosine similarity, finding the closest vectors, and serializing to JSON. It also features quantized storage for **significantly** reduced memory requirements.
 
+> [!NOTE]  
+> VectorStore is a simple, pure Ruby approach. For anything beyond local, low level volumes and experiments, consider [sqlite-vec](https://github.com/asg017/sqlite-vec), using Postgres with pgvector, or full-fat platforms like [Pinecone.](https://www.pinecone.io/)
+
 ## Features
 
 - **Vector Storage:** Easily add and retrieve vectors with unique keys.
