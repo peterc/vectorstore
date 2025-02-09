@@ -7,7 +7,7 @@ A pure Ruby library for storing and querying vectors with optional 1 bit quantiz
 - **Vector Storage:** Easily add and retrieve vectors with unique keys.
 - **Closest Match:** Find the closest vectors to a given query vector using cosine similarity.
 - **Serialization:** Serialize the vector store to JSON for persistence.
-- **Quantization:** Optional 1-bit quantization to reduce memory footprint.
+- **Quantization:** Optional 1-bit quantization to reduce memory footprint (significantly).
 - **Save/Load:** Persist vector store to disk and reload it.
 
 ## Installation
