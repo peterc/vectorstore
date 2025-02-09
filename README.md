@@ -53,9 +53,9 @@ loaded_store = VectorStore.new
 loaded_store.load("vector_store.json")
 ```
 
-### Working with Quantized Vectors
+### Working with quantized vectors
 
-VectorStore also supports 1 bit vector quantization so that vectors can be stored in a bitfield (using a string) for a significant memory use reduction at the cost of accuracy, particularly on low dimension vectors (high dimension vectors such as used for text embeddings will do a LOT better). Initialize the store with the `quantized: true` option:
+VectorStore supports 1 bit vector quantization so that vectors can be stored in a bitfield (using a ASCII-encoded string with 8 bits per character for portability) for a significant memory use reduction. The cost is accuracy, especially on low dimension vectors – high dimension vectors such as used for text embeddings will fare a LOT better. Initialize the store with the `quantized: true` option:
 
 ```ruby
 store = VectorStore.new(quantized: true)
