@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require_relative '../vector_storage'
+require 'tempfile'
 
 class TestVectorStore < Minitest::Test
   def setup
@@ -28,7 +29,8 @@ class TestVectorStore < Minitest::Test
 
   def test_save_and_load
     serialized_before = @store.serialize
-    filename = "test_vector_store.json"
+    file = Tempfile.new('vector_store')
+    filename = file.path
     @store.save(filename)
 
     loaded_store = VectorStore.new
@@ -37,7 +39,7 @@ class TestVectorStore < Minitest::Test
 
     assert_equal serialized_before, serialized_after
 
-    # Clean up created file.
-    File.delete(filename) if File.exist?(filename)
+    file.close
+    file.unlink if File.exist?(filename)
   end
 end
