@@ -83,5 +83,13 @@ class TestVectorStore < Minitest::Test
 
     file.close
     file.unlink if File.exist?(filename)
+  
+  def test_quantized_storage_format
+    store = VectorStore.new(quantized: true)
+    vector = [1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0]
+    store.add("vectorQ", vector)
+    stored = store.get("vectorQ")
+    # When quantization is enabled, we expect the stored vector to be a String (bitfield)
+    assert_instance_of String, stored
   end
 end
