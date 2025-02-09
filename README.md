@@ -73,6 +73,8 @@ store.find_closest_with_key("example")
 
 Supporting other embedding systems in a nice way would be good for the future, but I like OpenAI's embedding mechanism and it's cheap, so this is just step one. You can see example scripts in `examples/example_openai_*.rb` for a broader demo.
 
+For now, your API key is assumed to be in the `OPENAI_API_KEY` environment variable.
+
 ### Working with quantized vectors
 
 VectorStore supports 1 bit vector quantization so that vectors can be stored in a bitfield (using a ASCII-encoded string with 8 bits per character for portability) for a significant memory use reduction. The cost is accuracy, especially on low dimension vectors – high dimension vectors such as used for text embeddings from OpenAI's API (see above) will fare a LOT better. Initialize the store with the `quantized: true` option:
