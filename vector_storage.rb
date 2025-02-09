@@ -1,13 +1,18 @@
 require 'json'
 class VectorStore
-  def initialize
+  def initialize(quantized: false)
     # Internal store mapping primary key to vector (array of numbers)
     @vectors = {}
+    @quantized = quantized
   end
 
   # Add a vector with the given primary key. Overwrites any existing vector.
   def add(key, vector)
-    @vectors[key] = vector
+    if @quantized
+      @vectors[key] = quantize(vector)
+    else
+      @vectors[key] = vector
+    end
   end
 
   # Remove a vector by its primary key.
@@ -22,6 +27,9 @@ class VectorStore
 
   # Compute the cosine similarity between two vectors.
   def cosine_similarity(vec1, vec2)
+    if vec1.is_a?(String) && vec2.is_a?(String)
+      return cosine_similarity_quantized(vec1, vec2)
+    end
     # Ensure vectors are of the same size
     return 0.0 if vec1.size != vec2.size
 
@@ -36,11 +44,40 @@ class VectorStore
   # Find the top k closest vectors to the query vector using cosine similarity.
   # Returns an array of [key, similarity] pairs.
   def find_closest(query_vector, k=1)
+    if @quantized
+      query_vector = quantize(query_vector)
+    end
     similarities = @vectors.map do |key, vector|
       similarity = cosine_similarity(query_vector, vector)
       [key, similarity]
     end
     similarities.sort_by { |_, sim| -sim }.first(k)
+  end
+
+  # Compute cosine similarity for quantized vectors (bit strings).
+  def cosine_similarity_quantized(str1, str2)
+    dot = 0
+    total_ones_str1 = 0
+    total_ones_str2 = 0
+    str1.each_byte.with_index do |byte1, index|
+      byte2 = str2.getbyte(index)
+      dot += (byte1 & byte2).to_s(2).count("1")
+      total_ones_str1 += byte1.to_s(2).count("1")
+      total_ones_str2 += byte2.to_s(2).count("1")
+    end
+    return 0.0 if total_ones_str1 == 0 || total_ones_str2 == 0
+    dot.to_f / (Math.sqrt(total_ones_str1) * Math.sqrt(total_ones_str2))
+  end
+
+  # Convert an array of floats to a 1-bit quantized bit string.
+  def quantize(vector)
+    bits = vector.map { |x| x >= 0 ? 1 : 0 }
+    bytes = []
+    bits.each_slice(8) do |slice|
+      byte = slice.join.to_i(2)
+      bytes << byte.chr
+    end
+    bytes.join
   end
 
   # Serialize the internal vector store to a JSON string.
