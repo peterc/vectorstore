@@ -53,7 +53,7 @@ loaded_store = VectorStore.new
 loaded_store.load("vector_store.json")
 ```
 
-### Using OpenAI
+### Using OpenAI for vector embedding text
 
 VectorStore can integrate with OpenAI's API to generate embeddings for text inputs and queries. To use this feature with quantization (STRONGLY RECOMMENDED), initialize the store with quantized mode.
 
